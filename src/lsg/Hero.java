@@ -1,4 +1,4 @@
-package model;
+package lsg;
 
 public class Hero {
 
@@ -10,12 +10,10 @@ public class Hero {
 
 	public Hero(){
 		this.name = "Ynovator";
-		this.life = 100;
 	}
 
 	public Hero(String name){
 		this.name = name;
-		this.life = 100;
 	}
 
 	public String getName() {
@@ -52,16 +50,16 @@ public class Hero {
 	public void printStats(){
 		System.out.println(getName() +"\t"+getLife().toString()+"\t"+ getStamina().toString()+"\t"+ isAlive());
 	}
-	protected String isAlive(){
-		String vie;
-		boolean alive;
-		alive = getLife().equals(0);
-		if(alive == false){
-			vie = "(ALIVE)";
+	 protected String isAlive(){
+		String alive;
+		boolean dead;
+		dead = getLife().equals(0);
+		if(dead == false){
+			alive = "(ALIVE)";
 		}
 		else{
-			vie = "(DEAD)";
+			alive = "(DEAD)";
 		}
-		return vie;
+		return alive;
 	}
 }
