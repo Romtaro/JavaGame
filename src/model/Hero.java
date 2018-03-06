@@ -2,11 +2,11 @@ package model;
 
 public class Hero {
 
-	protected String name;
-	protected int life = 100;
-	protected int maxLife;
-	protected int stamina = 50;
-	protected int maxStamina;
+	private String name;
+	private int life = 100;
+	private int maxLife;
+	private int stamina = 50;
+	private int maxStamina;
 
 	public Hero(){
 		this.name = "Ynovator";
@@ -14,6 +14,7 @@ public class Hero {
 	}
 
 	public Hero(String name){
+		this.name = name;
 		this.life = 100;
 	}
 
@@ -49,6 +50,18 @@ public class Hero {
 	}
 
 	public void printStats(){
-		System.out.println(getName() +"\t"+getLife().toString()+"\t"+ getStamina().toString());
+		System.out.println(getName() +"\t"+getLife().toString()+"\t"+ getStamina().toString()+"\t"+ isAlive());
+	}
+	protected String isAlive(){
+		String vie;
+		boolean alive;
+		alive = getLife().equals(0);
+		if(alive == false){
+			vie = "(ALIVE)";
+		}
+		else{
+			vie = "(DEAD)";
+		}
+		return vie;
 	}
 }
