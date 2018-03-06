@@ -20,35 +20,35 @@ public class Hero {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	protected void setName(String name) {
 		this.name = name;
 	}
 	public Number getLife() {
 		return life;
 	}
-	public void setLife(int life) {
+	protected void setLife(int life) {
 		this.life = life;
 	}
 	public Number getMaxLife() {
 		return maxLife;
 	}
-	public void setMaxLife(int maxLife) {
+	protected void setMaxLife(int maxLife) {
 		this.maxLife = maxLife;
 	}
 	public Number getStamina() {
 		return stamina;
 	}
-	public void setStamina(int stamina) {
+	protected void setStamina(int stamina) {
 		this.stamina = stamina;
 	}
 	public Number getMaxStamina() {
 		return maxStamina;
 	}
-	public void setMaxStamina(int maxStamina) {
+	protected void setMaxStamina(int maxStamina) {
 		this.maxStamina = maxStamina;
 	}
 
 	public void printStats(){
-
+		System.out.print(getName() +"/t"+getLife().toString()+"/t"+ getStamina().toString());
 	}
 }
