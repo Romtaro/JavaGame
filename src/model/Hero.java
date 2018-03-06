@@ -49,6 +49,6 @@ public class Hero {
 	}
 
 	public void printStats(){
-		System.out.print(getName() +"/t"+getLife().toString()+"/t"+ getStamina().toString());
+		System.out.println(getName() +"\t"+getLife().toString()+"\t"+ getStamina().toString());
 	}
 }
