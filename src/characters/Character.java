@@ -49,6 +49,9 @@ public class Character {
 		public void printStats(){
 		System.out.println(String.format("%-20s %-20s  %-20s %-20s %-20s ", "["+getClass().getSimpleName()+"]", getName(), getLife(), getStamina(),isAlive()));
 	}
+		public String toString(){
+			return String.format("%-20s %-20s  %-20s %-20s %-20s ", "["+getClass().getSimpleName()+"]", getName(), getLife(), getStamina(),isAlive());
+		}
 	/**
 	 * On va regarder si un joueur est en vie suivant le boolean on return un string alive ou dead
 	 * @return alive

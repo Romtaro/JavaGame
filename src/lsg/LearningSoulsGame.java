@@ -3,6 +3,7 @@ package lsg;
 import java.io.IOException;
 import characters.Hero;
 import characters.Monster;
+import lsg.weapons.Weapon;
 public class LearningSoulsGame {
 
 	 public LearningSoulsGame() throws IOException {
@@ -20,11 +21,13 @@ public class LearningSoulsGame {
 		Monster c = new Monster("BigBoss");
 		Monster d = new Monster("MiniBoss");
 		pseudo.printStats();
-		rodz.printStats();
+		System.out.println(rodz.toString());
 		a.printStats();
 		b.printStats();
 		c.printStats();
-		d.printStats();
+		System.out.println(d.toString());
+		Weapon sword = new Weapon("Basic Sword",5,10,20,100);
+		System.out.println(sword.toString());
 		/**
 		 * N°6
 		 * private ne permet de l'appeler directement ici,
