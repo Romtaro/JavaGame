@@ -4,6 +4,7 @@ import java.io.IOException;
 import characters.Hero;
 import characters.Monster;
 import lsg.weapons.Weapon;
+import lsg.weapons.Sword;
 public class LearningSoulsGame {
 
 	 public LearningSoulsGame() throws IOException {
@@ -28,6 +29,8 @@ public class LearningSoulsGame {
 		System.out.println(d.toString());
 		Weapon sword = new Weapon("Basic Sword",5,10,20,100);
 		System.out.println(sword.toString());
+		Sword basSword = new Sword();
+		System.out.println(basSword.toString());
 		/**
 		 * N°6
 		 * private ne permet de l'appeler directement ici,
