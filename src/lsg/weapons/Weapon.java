@@ -1,7 +1,9 @@
 package lsg.weapons;
 
-public class Weapon {
+import characters.Hero;
 
+public class Weapon {
+	Hero hero;
 	private String name;
 	private int minDamage;
 	private int maxDamage;
@@ -53,7 +55,7 @@ public class Weapon {
 		return durability;
 	}
 
-	private void setDurability(int durability) {
+	public void setDurability(int durability) {
 		this.durability = durability;
 	}
 
@@ -61,7 +63,7 @@ public class Weapon {
 		this.durability = getDurability()-1;
 	}
 
-	protected int isBroken(){
+	public int isBroken(){
 		int dura;
 		dura = Integer.compare(getDurability(), 0);
 		return dura;
@@ -77,7 +79,7 @@ public class Weapon {
 		System.out.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s",c.isBroken(), c.getName(), c.getStamCost(), c.getMinDamage(), c.getMaxDamage(), c.getDurability()));
 	}*/
 	public String toString(){
-		return String.format("%-8s %-10s %-10s %-10s %-20s %-10s","["+getClass().getSimpleName()+"]","[" +isBroken()+"]", getName(),getMinDamage() , getMaxDamage(), getStamCost(), getDurability());
+		return String.format("%-1s %-1s %-1s %-1s %-1s %-1s","["+getClass().getSimpleName()+"]", getName(),"(min:"+getMinDamage() , "max:"+getMaxDamage(), "Stam:"+getStamCost(), "dur:"+getDurability()+" "+"[" +isBroken()+"]"+")");
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.Random;
 public class Dice {
 
 	private int face;
-	private int random;
+	public int random;
 
 	public Dice(int face){
 		this.face = face;
@@ -14,6 +14,7 @@ public class Dice {
 	/**
 	 * La valeurs du optenu avec le lancer est bien compris entre 0 et 49
 	 * @param args
+	 * @return
 	 *
 	 */
 /*
@@ -27,9 +28,10 @@ public static void main(String[] args) {
 
 }
 */
-private void roll(){
+public int roll(){
+	//System.out.println("oui");
 	Random r = new Random();
 	this.random = r.nextInt(this.face);
-
+	return this.random;
 }
 }

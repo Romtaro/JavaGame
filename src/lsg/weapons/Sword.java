@@ -9,7 +9,7 @@ public class Sword {
 	private int stamCost;
 	private int durability;
 
-	public Sword(){
+	public Sword() {
 
 		this.name = "Basic Sword";
 		this.minDamage = 5;
@@ -54,7 +54,7 @@ public class Sword {
 		return durability;
 	}
 
-	private void setDurability(int durability) {
+	public void setDurability(int durability) {
 		this.durability = durability;
 	}
 
@@ -62,7 +62,7 @@ public class Sword {
 		this.durability = getDurability()-1;
 	}
 
-	protected int isBroken(){
+	public int isBroken(){
 		int dura;
 		dura = Integer.compare(getDurability(), 0);
 		return dura;
@@ -76,7 +76,7 @@ public class Sword {
 		System.out.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s",d.isBroken(), d.getName(), d.getStamCost(), d.getMinDamage(), d.getMaxDamage(), d.getDurability()));
 	}*/
 	public String toString(){
-		return String.format("%-8s %-10s %-10s %-10s %-20s %-10s","["+getClass().getSimpleName()+"]","[" +isBroken()+"]", getName(),getMinDamage() , getMaxDamage(), getStamCost(), getDurability());
+		return String.format("%-1s %-1s %-1s %-1s %-1s %-1s","["+getClass().getSimpleName()+"]", getName(),"(min:"+getMinDamage() , "max:"+getMaxDamage(), "Stam:"+getStamCost(), "dur:"+getDurability()+" "+"[" +isBroken()+"]"+")");
 	}
 
 

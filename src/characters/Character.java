@@ -1,6 +1,10 @@
 package characters;
+import lsg.helpers.Dice;
+import lsg.weapons.Weapon;
+
 
 public class Character {
+	public Dice dee;
 	/**
 	 * Pour le moment nous devons passer name life et stamine et protected pour les modifier dans la classe fille
 	 * Sans ça nous ne pouvons pas faire de la vie et de la force personnalisé pour chaque race
@@ -30,13 +34,13 @@ public class Character {
 	protected void setMaxLife(int maxLife) {
 		this.maxLife = maxLife;
 	}
-	public Number getStamina() {
+	public int getStamina() {
 		return stamina;
 	}
 	protected void setStamina(int stamina) {
 		this.stamina = stamina;
 	}
-	public Number getMaxStamina() {
+	public int getMaxStamina() {
 		return maxStamina;
 	}
 	protected void setMaxStamina(int maxStamina) {
@@ -50,7 +54,7 @@ public class Character {
 		System.out.println(String.format("%-20s %-20s  %-20s %-20s %-20s ", "["+getClass().getSimpleName()+"]", getName(), getLife(), getStamina(),isAlive()));
 	}
 		public String toString(){
-			return String.format("%-20s %-20s  %-20s %-20s %-20s ", "["+getClass().getSimpleName()+"]", getName(), getLife(), getStamina(),isAlive());
+			return String.format("%-20s %-20s  %-20s %-20s %-20s ", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(),isAlive());
 		}
 	/**
 	 * On va regarder si un joueur est en vie suivant le boolean on return un string alive ou dead
@@ -68,4 +72,74 @@ public class Character {
 		}
 		return alive;
 	}
+
+	public int attackWith(Weapon weapon){
+		double pres =0;
+		int minDmg=0;
+		int maxDmg=0;
+		int total = 0;
+		int ecard =0;
+
+		//si l'arme et broken il perd de l'energie ? si l'energie est vide il perd de la résis ?
+		if(weapon.isBroken() ==0 || this.getStamina() == 0){
+
+			return 0;
+		}
+
+		pres = getDe();
+		minDmg = weapon.getMinDamage();
+		maxDmg = weapon.getMaxDamage();
+		ecard = maxDmg - minDmg;
+
+		if(pres == 0){
+			this.setStamina(this.getStamina()-weapon.getStamCost());
+			if(this.getStamina() <0){
+				total = this.getStamina();
+				this.setStamina(0);
+			}
+			total = total+minDmg;
+			weapon.setDurability(weapon.getDurability()-1);
+			if(total < 0){
+				return 0;
+			}else{
+				return total;
+			}
+		}else if(pres == 100){
+			this.setStamina(getStamina()-weapon.getStamCost());
+			if(getStamina() <0){
+				total = this.getStamina();
+				this.setStamina(0);
+			}
+			total = total+maxDmg;
+			weapon.setDurability(weapon.getDurability()-1);
+
+			return total;
+		}else{
+			this.setStamina(this.getStamina()-weapon.getStamCost());
+			if(this.getStamina() <0){
+				total = this.getStamina();
+
+				this.setStamina(0);
+			}
+			//System.out.println(pres);
+			double stock = pres/100*ecard;
+			int stock2 = (int) Math.round(stock);
+			//System.out.println("total : : " +total);
+			total = total+minDmg+stock2 ;
+
+			weapon.setDurability(weapon.getDurability()-1);
+			if(total < 0){
+				return 0;
+			}else{
+			return total;
+			}
+		}
+
+		}
+	public int getDe(){
+		int de = this.dee.roll();
+		//System.out.println("recup de value de : "+ de);
+		return de;
+	}
+
 }
