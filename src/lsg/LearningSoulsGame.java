@@ -15,39 +15,40 @@ public class LearningSoulsGame {
 		/*
 		 * On initialise deux hero et quatre monstre avec les deux méthode de constructeur
 		 */
-		Hero pseudo = new Hero(101);
-		Hero rodz = new Hero("Le gros Hero",101);
-		Monster a = new Monster(101);
-		Monster b = new Monster(101);
-		Monster c = new Monster("BigyBoss",101);
-		Monster d = new Monster("MiniBoss",101);
+		Weapon weapon = new Weapon("Basic Weapon",5,10,10,100);
+		Hero pseudo = new Hero(101,weapon);
+		Hero rodz = new Hero("Le gros Hero",101,weapon);
+		Monster a = new Monster(101,weapon);
+		Monster b = new Monster(101,weapon);
+		Monster c = new Monster("BigyBoss",101,weapon);
+		Monster d = new Monster("MiniBoss",101,weapon);
 		System.out.println(pseudo.toString());
 		System.out.println(rodz.toString());
 		System.out.println(a.toString());
 		System.out.println(b.toString());
 		System.out.println(c.toString());
 		System.out.println(d.toString());
-		Weapon weapon = new Weapon("Basic Weapon",5,10,10,100);
+
 		System.out.println(weapon.toString());
 		Sword basSword = new Sword();
 		System.out.println(basSword.toString());
 		/*
 		 * Test attaque on re marque que le hero et le monstre utilise la même arme ce qui a pour effet de reduire la endurance de l'arme pour chaque coups dans le cbt
 		 */
-		/*
+
 		System.out.println("-----------Attaque----------");
 		for(int i=0; i< 5; i++){
 			System.out.println("-----------Hero----------\n");
-		System.out.println(pseudo.getName() +" Attaque du : "+pseudo.attackWith(weapon));
+		System.out.println(pseudo.getName() +" Attaque du : "+pseudo.Attack());
 		System.out.println(pseudo.toString());
-		System.out.println(weapon.toString());
+		System.out.println(pseudo.weapon.toString());
 		System.out.println("\n");
 		System.out.println("-----------Monster----------\n");
-		System.out.println(c.getName() +" Attaque du : "+c.attackWith(weapon));
+		System.out.println(c.getName() +" Attaque du : "+c.Attack());
 		System.out.println(c.toString());
-		System.out.println(weapon.toString());
+		System.out.println(c.weapon.toString());
 		System.out.println("\n");
-		}*/
+		}
 		/**
 		 * N°6
 		 * private ne permet de l'appeler directement ici,

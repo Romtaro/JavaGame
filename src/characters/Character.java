@@ -5,6 +5,7 @@ import lsg.weapons.Weapon;
 
 public class Character {
 	public Dice dee;
+	public Weapon weapon;
 	/**
 	 * Pour le moment nous devons passer name life et stamine et protected pour les modifier dans la classe fille
 	 * Sans ça nous ne pouvons pas faire de la vie et de la force personnalisé pour chaque race
@@ -73,7 +74,7 @@ public class Character {
 		return alive;
 	}
 
-	public int attackWith(Weapon weapon){
+	private int attackWith(Weapon weapon){
 		double pres =0;
 		int minDmg=0;
 		int maxDmg=0;
@@ -87,8 +88,8 @@ public class Character {
 		}
 
 		pres = getDe();
-		minDmg = weapon.getMinDamage();
-		maxDmg = weapon.getMaxDamage();
+		minDmg = this.weapon.getMinDamage();
+		maxDmg = this.weapon.getMaxDamage();
 		ecard = maxDmg - minDmg;
 
 		if(pres == 0){
@@ -98,7 +99,7 @@ public class Character {
 				this.setStamina(0);
 			}
 			total = total+minDmg;
-			weapon.setDurability(weapon.getDurability()-1);
+			this.weapon.setDurability(weapon.getDurability()-1);
 			if(total < 0){
 				return 0;
 			}else{
@@ -111,7 +112,7 @@ public class Character {
 				this.setStamina(0);
 			}
 			total = total+maxDmg;
-			weapon.setDurability(weapon.getDurability()-1);
+			this.weapon.setDurability(weapon.getDurability()-1);
 
 			return total;
 		}else{
@@ -127,7 +128,7 @@ public class Character {
 			//System.out.println("total : : " +total);
 			total = total+minDmg+stock2 ;
 
-			weapon.setDurability(weapon.getDurability()-1);
+			this.weapon.setDurability(weapon.getDurability()-1);
 			if(total < 0){
 				return 0;
 			}else{
@@ -140,6 +141,10 @@ public class Character {
 		int de = this.dee.roll();
 		//System.out.println("recup de value de : "+ de);
 		return de;
+	}
+	public int Attack(){
+		return this.attackWith(this.weapon);
+
 	}
 
 }
