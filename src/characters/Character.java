@@ -1,11 +1,13 @@
 package characters;
 import lsg.helpers.Dice;
 import lsg.weapons.Weapon;
-
-
+import characters.Monster;
+import java.util.Scanner;
 public class Character {
 	public Dice dee;
 	public Weapon weapon;
+	public Monster monster;
+	Scanner scanner = new Scanner(System.in);
 	/**
 	 * Pour le moment nous devons passer name life et stamine et protected pour les modifier dans la classe fille
 	 * Sans ça nous ne pouvons pas faire de la vie et de la force personnalisé pour chaque race
@@ -15,7 +17,7 @@ public class Character {
 	private int maxLife;
 	protected int stamina;
 	private int maxStamina;
-
+	public int total;
 
 	public String getName() {
 		return name;
@@ -23,7 +25,7 @@ public class Character {
 	protected void setName(String name) {
 		this.name = name;
 	}
-	public Number getLife() {
+	public int getLife() {
 		return life;
 	}
 	protected void setLife(int life) {
@@ -63,9 +65,9 @@ public class Character {
 	 */
 	public String isAlive(){
 		String alive;
-		boolean dead;
-		dead = getLife().equals(0);
-		if(dead == false){
+
+		if(getLife() > 0){
+
 			alive = "(ALIVE)";
 		}
 		else{
@@ -78,7 +80,7 @@ public class Character {
 		double pres =0;
 		int minDmg=0;
 		int maxDmg=0;
-		int total = 0;
+		this.total = 0;
 		int ecard =0;
 
 		//si l'arme et broken il perd de l'energie ? si l'energie est vide il perd de la résis ?
@@ -95,30 +97,30 @@ public class Character {
 		if(pres == 0){
 			this.setStamina(this.getStamina()-weapon.getStamCost());
 			if(this.getStamina() <0){
-				total = this.getStamina();
+				this.total = this.getStamina();
 				this.setStamina(0);
 			}
-			total = total+minDmg;
+			this.total = this.total+minDmg;
 			this.weapon.setDurability(weapon.getDurability()-1);
-			if(total < 0){
+			if(this.total < 0){
 				return 0;
 			}else{
-				return total;
+				return this.total;
 			}
 		}else if(pres == 100){
 			this.setStamina(getStamina()-weapon.getStamCost());
 			if(getStamina() <0){
-				total = this.getStamina();
+				this.total = this.getStamina();
 				this.setStamina(0);
 			}
-			total = total+maxDmg;
+			this.total = this.total+maxDmg;
 			this.weapon.setDurability(weapon.getDurability()-1);
 
-			return total;
+			return this.total;
 		}else{
 			this.setStamina(this.getStamina()-weapon.getStamCost());
 			if(this.getStamina() <0){
-				total = this.getStamina();
+				this.total = this.getStamina();
 
 				this.setStamina(0);
 			}
@@ -126,14 +128,16 @@ public class Character {
 			double stock = pres/100*ecard;
 			int stock2 = (int) Math.round(stock);
 			//System.out.println("total : : " +total);
-			total = total+minDmg+stock2 ;
-
+			this.total = this.total+minDmg+stock2 ;
+			//System.out.println("total : : " +total);
 			this.weapon.setDurability(weapon.getDurability()-1);
-			if(total < 0){
+			if(this.total < 0){
 				return 0;
 			}else{
-			return total;
+				//System.out.println("toto: "+this.total);
+			return this.total;
 			}
+
 		}
 
 		}
@@ -142,9 +146,77 @@ public class Character {
 		//System.out.println("recup de value de : "+ de);
 		return de;
 	}
-	public int Attack(){
-		return this.attackWith(this.weapon);
+	public int attack(){
+		 this.attackWith(this.weapon);
+		return this.getHitWith(this.total);
 
 	}
 
+	public int getHitWith(int value){
+
+
+		int dmg = this.total;
+		//System.out.println("dmg : : " +dmg);
+		return dmg;
+	}
+
+	public void combat(Character charactereHero, Character charactereMonstre){
+		///Resum//
+		refreshVs(charactereHero, charactereMonstre);
+
+				///////
+		while(!(charactereHero.getLife()==0) && !(charactereMonstre.getLife() == 0) && !(charactereHero.getStamina() == 0)){
+
+			int vieHero = charactereHero.getLife();
+			int vieMonster = charactereMonstre.getLife();
+			int vieBaseHero = charactereHero.getLife();
+			int vieBaseMonster = charactereMonstre.getLife();
+			/////Tour Hero////
+			System.out.println(charactereHero.getName()+" Attaque "+charactereMonstre.getName()+"\n");
+
+			int restH = vieMonster - charactereHero.attack();
+			int resH = (restH>0) ? restH: 0;
+			charactereMonstre.setLife(resH);
+			int dmg = vieBaseMonster - restH;
+			System.out.println(charactereMonstre.getName()+" prend "+ dmg +" de dommage \n Il ne reste : "+ resH + " PDV\n" );
+
+			////////Tour Monstre//////////
+			if(charactereMonstre.getLife()>0){
+			int restM = vieHero - charactereMonstre.attack();
+			int resM = (restM>0) ? restM: 0;
+			charactereHero.setLife(resM);
+			int dmgM = vieBaseHero - restM;
+			System.out.println(charactereHero.getName()+" prend "+ dmgM +" de dommage \n Il ne reste : "+ resM + " PDV\n" );
+			refresh(charactereHero, charactereMonstre);
+			}
+			else{
+				refresh(charactereHero, charactereMonstre);
+				System.out.println(charactereMonstre.getName()+" est mort de ses blessures");
+
+			}
+
+		}if(charactereHero.getLife()==0){
+
+			System.out.println(charactereHero.getName()+" est mort de ses blessures");
+		}
+
+
+	}
+
+	public void refresh(Character charactereHero, Character charactereMonstre){
+		System.out.println("Hit enter --> key for next move :");
+		String st = scanner.nextLine();
+		///Resum//
+		System.out.println(charactereHero.toString());
+		System.out.println(charactereMonstre.toString()+("\n"));
+		///////
+	}
+	public void refreshVs(Character charactereHero, Character charactereMonstre){
+		System.out.println("Hit enter --> key for next move :");
+		String st = scanner.nextLine();
+		System.out.println("\t \t \t \t COMBAT START");
+		System.out.println(charactereHero.toString());
+		System.out.println("\t \t \t VS");
+		System.out.println(charactereMonstre.toString()+("\n"));
+	}
 }

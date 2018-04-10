@@ -1,22 +1,30 @@
 package lsg;
 
 import java.io.IOException;
+
+import characters.Character;
 import characters.Hero;
 import characters.Monster;
 import lsg.weapons.Weapon;
+import lsg.weapons.Claw;
+import lsg.weapons.ShotGun;
 import lsg.weapons.Sword;
 public class LearningSoulsGame {
 
-	 public LearningSoulsGame() throws IOException {
+	private static Monster monstre;
+	private static Hero hero;
+	public LearningSoulsGame() throws IOException {
 
 	    }
 
 	public static void main(String[] args) {
+		init();
 		/*
 		 * On initialise deux hero et quatre monstre avec les deux méthode de constructeur
 		 */
-		Weapon weapon = new Weapon("Basic Weapon",5,10,10,100);
-		Hero pseudo = new Hero(101,weapon);
+		/*Weapon weapon = new Weapon("Basic Weapon",5,10,10,100);
+		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100);
+		Hero pseudo = new Hero(101,shotGun);
 		Hero rodz = new Hero("Le gros Hero",101,weapon);
 		Monster a = new Monster(101,weapon);
 		Monster b = new Monster(101,weapon);
@@ -31,24 +39,30 @@ public class LearningSoulsGame {
 
 		System.out.println(weapon.toString());
 		Sword basSword = new Sword();
-		System.out.println(basSword.toString());
+		System.out.println(basSword.toString()+"\n");*/
 		/*
 		 * Test attaque on re marque que le hero et le monstre utilise la même arme ce qui a pour effet de reduire la endurance de l'arme pour chaque coups dans le cbt
 		 */
 
-		System.out.println("-----------Attaque----------");
-		for(int i=0; i< 5; i++){
+
+		//play_v1(pseudo, c);
+
+		//System.out.println("-----------Attaque----------\n");
+
+		/*for(int i=0; i< 5; i++){
 			System.out.println("-----------Hero----------\n");
-		System.out.println(pseudo.getName() +" Attaque du : "+pseudo.Attack());
+
 		System.out.println(pseudo.toString());
-		System.out.println(pseudo.weapon.toString());
+		System.out.println(pseudo.weapon.toString()+ "\n");
+		System.out.println(pseudo.getName() +" Reste au monstre : "+ pseudo.attack(c));
 		System.out.println("\n");
 		System.out.println("-----------Monster----------\n");
-		System.out.println(c.getName() +" Attaque du : "+c.Attack());
+
 		System.out.println(c.toString());
-		System.out.println(c.weapon.toString());
+		System.out.println(c.weapon.toString()+"\n");
+		System.out.println(c.getName()  +" reste au héro : "+c.attack(pseudo));
 		System.out.println("\n");
-		}
+		}*/
 		/**
 		 * N°6
 		 * private ne permet de l'appeler directement ici,
@@ -65,5 +79,22 @@ public class LearningSoulsGame {
 		 * private accéssible seulement au sein de la class
 		 * protected accessible a la class fille dans le package identique
 		 */
+
+
+
 	}
+
+	private static void init(){
+		System.out.println("--------------------- Bienvenue dans SoualsGame Aventurier ! ---------------------\n");
+		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100);
+		hero = new Hero(101,shotGun);
+		Claw claw = new Claw();
+		monstre = new Monster("BiggyBoss",101,claw);
+		play_v1(hero,monstre);
+	}
+
+	private static void play_v1(Character characterHero, Character characterMonster){
+		characterHero.combat(characterHero, characterMonster);
+	}
+
 }
