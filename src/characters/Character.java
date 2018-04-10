@@ -199,6 +199,9 @@ public class Character {
 
 			System.out.println(charactereHero.getName()+" est mort de ses blessures");
 		}
+		if(charactereHero.getStamina()== 0 && charactereMonstre.getStamina()==0){
+			System.out.println("Match null, les deux combattants sont épuissés ");
+		}
 
 
 	}

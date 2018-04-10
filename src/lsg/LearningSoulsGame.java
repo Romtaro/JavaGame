@@ -85,7 +85,7 @@ public class LearningSoulsGame {
 	}
 
 	private static void init(){
-		System.out.println("--------------------- Bienvenue dans SoualsGame Aventurier ! ---------------------\n");
+		System.out.println("-------------------------------- Bienvenue dans SoualsGame Aventurier ! --------------------------------\n");
 		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100);
 		hero = new Hero(101,shotGun);
 		Claw claw = new Claw();
