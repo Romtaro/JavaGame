@@ -5,6 +5,7 @@ import lsg.helpers.Dice;
 
 public class Monster extends Character{
 	private static int instances = 0;
+	private float skinThickness;
 
 	/**
 	 * on utilise la value instances pour nommer les monstre
@@ -16,6 +17,7 @@ public class Monster extends Character{
 		this.stamina = 10;
 		this.dee = new Dice(i);
 		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
+		this.skinThickness = 20;
 	}
 
 	public Monster(String name, int i, Weapon weapon){
@@ -24,11 +26,21 @@ public class Monster extends Character{
 		this.life = 10;
 		this.stamina = 10;
 		this.dee = new Dice(i);
+		this.skinThickness = 20;
 		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
+
 	}
 
 
-	 /**
+	 public float getSkinThickness() {
+		return skinThickness;
+	}
+
+	public void setSkinThickness(float skinThickness) {
+		this.skinThickness = skinThickness;
+	}
+
+	/**
 	  * on incrémente une variable pour compter les monstres créer.
 	  */
 	private static void INSTANCES_COUNT(){

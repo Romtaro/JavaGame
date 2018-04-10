@@ -6,6 +6,8 @@ import characters.Character;
 import characters.Hero;
 import characters.Monster;
 import lsg.weapons.Weapon;
+import lsg.armor.*;
+
 import lsg.weapons.Claw;
 import lsg.weapons.ShotGun;
 import lsg.weapons.Sword;
@@ -18,10 +20,17 @@ public class LearningSoulsGame {
 	    }
 
 	public static void main(String[] args) {
+		BlackWitchVeil itemB = new BlackWitchVeil();
+		RingedKnightArmor itemR = new RingedKnightArmor();
+		DragonSlayerLeggings itemD = new DragonSlayerLeggings();
+		System.out.println(itemB.toString());
+		System.out.println(itemR.toString());
+		System.out.println(itemD.toString());
 		init();
 		/*
 		 * On initialise deux hero et quatre monstre avec les deux méthode de constructeur
 		 */
+
 		/*Weapon weapon = new Weapon("Basic Weapon",5,10,10,100);
 		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100);
 		Hero pseudo = new Hero(101,shotGun);
