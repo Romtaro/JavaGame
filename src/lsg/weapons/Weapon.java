@@ -78,6 +78,7 @@ public class Weapon {
 		System.out.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s",d.isBroken(), d.getName(), d.getStamCost(), d.getMinDamage(), d.getMaxDamage(), d.getDurability()));
 		System.out.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s",c.isBroken(), c.getName(), c.getStamCost(), c.getMinDamage(), c.getMaxDamage(), c.getDurability()));
 	}*/
+	@Override
 	public String toString(){
 		return String.format("%-1s %-1s %-1s %-1s %-1s %-1s","["+getClass().getSimpleName()+"]", getName(),"(min:"+getMinDamage() , "max:"+getMaxDamage(), "Stam:"+getStamCost(), "dur:"+getDurability()+" "+"[" +isBroken()+"]"+")");
 	}

@@ -7,6 +7,7 @@ public class NoonGift extends Talisman {
 	 * {@value buff = 10.5}
 	 * {@value start = 12}
 	 * {@value end = 14}
+	 * il s'active entre 12h et 14h
 	 */
 	public NoonGift() {
 		super("Noon Gift", 10.5f, 12, 14);

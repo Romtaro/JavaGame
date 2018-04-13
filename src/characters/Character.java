@@ -74,9 +74,11 @@ public abstract class Character {
 		 * getClass().getSimpleName() va permettre de récuperer le nom de la class mère si un Hero et créer alors il écrira Hero. Si Monster créer alors il affichera Monster
 		 * getClass().getName() récupére "characters.Monster" et pas seulement Monster
 		 */
+
 		public void printStats(){
 		System.out.println(String.format("%-20s %-20s  %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"]", getName(), getLife(), getStamina(), computeProtection(), isAlive()));
 	}
+		@Override
 		public String toString(){
 			String protect = NumberFormat.getNumberInstance(Locale.US).format(computeProtection());
 
