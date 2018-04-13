@@ -5,7 +5,7 @@ import lsg.helpers.Dice;
 
 public class Monster extends Character{
 	private static int instances = 0;
-	private float skinThickness;
+	protected float skinThickness;
 
 	/**
 	 * on utilise la value instances pour nommer les monstre
@@ -26,7 +26,7 @@ public class Monster extends Character{
 		this.life = 10;
 		this.stamina = 10;
 		this.dee = new Dice(i);
-		this.skinThickness = 20;
+		this.skinThickness = 10;
 		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
 
 	}
@@ -46,6 +46,10 @@ public class Monster extends Character{
 	private static void INSTANCES_COUNT(){
 		instances = ++instances;
 	}
+	@Override
+	public float computeProtection(){
 
+		return getSkinThickness();
+	}
 
 }

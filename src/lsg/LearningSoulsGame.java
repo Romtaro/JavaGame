@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import characters.Character;
 import characters.Hero;
+import characters.Lycanthrope;
 import characters.Monster;
 import lsg.weapons.Weapon;
 import lsg.armor.*;
@@ -26,6 +27,7 @@ public class LearningSoulsGame {
 		System.out.println(itemB.toString());
 		System.out.println(itemR.toString());
 		System.out.println(itemD.toString());
+
 		init();
 		/*
 		 * On initialise deux hero et quatre monstre avec les deux méthode de constructeur
@@ -99,11 +101,26 @@ public class LearningSoulsGame {
 		hero = new Hero(101,shotGun);
 		Claw claw = new Claw();
 		monstre = new Monster("BiggyBoss",101,claw);
-		play_v1(hero,monstre);
+		monstre.computeProtection();
+		Monster meme = new Lycanthrope();
+		//play_v1(hero,monstre);
+		//play_v2(hero,monstre);
+		play_v3(hero, meme);
 	}
 
 	private static void play_v1(Character characterHero, Character characterMonster){
 		characterHero.combat(characterHero, characterMonster);
 	}
 
+	private static void play_v2(Character characterHero, Character characterMonster){
+		RingedKnightArmor itemR = new RingedKnightArmor();
+		((Hero) characterHero).setArmorItem(itemR, 0);
+		characterHero.combat(characterHero, characterMonster);
+	}
+
+	private static void play_v3(Character characterHero, Character characterMonster){
+		RingedKnightArmor itemR = new RingedKnightArmor();
+		((Hero) characterHero).setArmorItem(itemR, 0);
+		characterHero.combat(characterHero, characterMonster);
+	}
 }

@@ -1,13 +1,21 @@
 package characters;
 import lsg.helpers.Dice;
+import lsg.weapons.Sword;
 import lsg.weapons.Weapon;
 import characters.Monster;
 import java.util.Scanner;
-public class Character {
+import java.text.NumberFormat;
+import java.util.Locale;
+
+
+public abstract class Character {
+
 	public Dice dee;
 	public Weapon weapon;
+	public Sword sword;
 	public Monster monster;
 	Scanner scanner = new Scanner(System.in);
+
 	/**
 	 * Pour le moment nous devons passer name life et stamine et protected pour les modifier dans la classe fille
 	 * Sans ça nous ne pouvons pas faire de la vie et de la force personnalisé pour chaque race
@@ -24,6 +32,19 @@ public class Character {
 	}
 	protected void setName(String name) {
 		this.name = name;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+	public void setWeapon(Weapon weapon ) {
+		this.weapon = weapon;
+	}
+	public Sword getSword() {
+		return sword;
+	}
+	public void setSword(Sword weapon ) {
+		this.sword = sword;
 	}
 	public int getLife() {
 		return life;
@@ -54,10 +75,12 @@ public class Character {
 		 * getClass().getName() récupére "characters.Monster" et pas seulement Monster
 		 */
 		public void printStats(){
-		System.out.println(String.format("%-20s %-20s  %-20s %-20s %-20s ", "["+getClass().getSimpleName()+"]", getName(), getLife(), getStamina(),isAlive()));
+		System.out.println(String.format("%-20s %-20s  %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"]", getName(), getLife(), getStamina(), computeProtection(), isAlive()));
 	}
 		public String toString(){
-			return String.format("%-20s %-20s  %-20s %-20s %-20s ", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(),isAlive());
+			String protect = NumberFormat.getNumberInstance(Locale.US).format(computeProtection());
+
+			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(), "PROTECTION: "+ protect,isAlive());
 		}
 	/**
 	 * On va regarder si un joueur est en vie suivant le boolean on return un string alive ou dead
@@ -154,10 +177,9 @@ public class Character {
 
 	public int getHitWith(int value){
 
-
-		int dmg = this.total;
+		float dmg = value;
 		//System.out.println("dmg : : " +dmg);
-		return dmg;
+		return (int)dmg;
 	}
 
 	public void combat(Character charactereHero, Character charactereMonstre){
@@ -173,16 +195,24 @@ public class Character {
 			int vieBaseMonster = charactereMonstre.getLife();
 			/////Tour Hero////
 			System.out.println(charactereHero.getName()+" Attaque "+charactereMonstre.getName()+"\n");
+			//on calcul vie en moins///
+			float viemoinsh =charactereHero.attack() * charactereMonstre.computeProtection()/100 ;
+			int finaldmgH = charactereHero.total - (int) viemoinsh;
+			//ok on enleve la vie//
+			int restH = vieMonster - finaldmgH;
 
-			int restH = vieMonster - charactereHero.attack();
 			int resH = (restH>0) ? restH: 0;
 			charactereMonstre.setLife(resH);
+			////
 			int dmg = vieBaseMonster - restH;
 			System.out.println(charactereMonstre.getName()+" prend "+ dmg +" de dommage \n Il ne reste : "+ resH + " PDV\n" );
 
 			////////Tour Monstre//////////
 			if(charactereMonstre.getLife()>0){
-			int restM = vieHero - charactereMonstre.attack();
+			float viemoins = charactereMonstre.attack() * charactereHero.computeProtection()/100;
+			int finaldmgM = charactereMonstre.total - (int)viemoins;
+			int restM = vieHero - finaldmgM;
+
 			int resM = (restM>0) ? restM: 0;
 			charactereHero.setLife(resM);
 			int dmgM = vieBaseHero - restM;
@@ -203,7 +233,6 @@ public class Character {
 			System.out.println("Match null, les deux combattants sont épuissés ");
 		}
 
-
 	}
 
 	public void refresh(Character charactereHero, Character charactereMonstre){
@@ -222,4 +251,5 @@ public class Character {
 		System.out.println("\t \t \t VS");
 		System.out.println(charactereMonstre.toString()+("\n"));
 	}
+	public abstract float computeProtection();
 }
