@@ -37,7 +37,7 @@ public class Monster extends Character{
 	public Monster(String name, int i, Weapon weapon, Talisman talisman){
 		INSTANCES_COUNT();
 		this.name = String.format("%-6s %-1s",name , "n°"+instances);
-		this.life = 10;
+		this.life = 100;
 		this.stamina = 10;
 		this.dee = new Dice(i);
 		this.skinThickness = 10;

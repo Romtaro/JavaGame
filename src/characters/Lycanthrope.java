@@ -15,7 +15,7 @@ public class Lycanthrope extends Monster{
 		super(101, new Claw());
 		this.name = "Lycanthrope";
 		this.skinThickness = 50;
-
+		this.life = 40;
 	}
 
 }

@@ -85,7 +85,7 @@ public abstract class Character {
 		public String toString(){
 			String protect = NumberFormat.getNumberInstance(Locale.US).format(computeProtection());
 
-			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(), "PROTECTION: "+ protect, "Buff :"+ buff(), isAlive());
+			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(), "PROTECTION: "+ protect, "Buff :"+ buff(), isAlive());
 		}
 	/**
 	 * On va regarder si un joueur est en vie suivant le boolean on return un string alive ou dead
@@ -193,7 +193,8 @@ public abstract class Character {
 
 				///////
 		while(!(charactereHero.getLife()==0) && !(charactereMonstre.getLife() == 0) && !(charactereHero.getStamina() == 0)){
-
+			int restH = 0;
+			int restM =0;
 			int vieHero = charactereHero.getLife();
 			int vieMonster = charactereMonstre.getLife();
 			int vieBaseHero = charactereHero.getLife();
@@ -206,8 +207,11 @@ public abstract class Character {
 			//System.out.println(((Hero) charactereHero).getTotalBuff());
 			int finaldmgH = charactereHero.total - (int) viemoinsh;
 			//ok on enleve la vie//
-			int restH = (int) (vieMonster - (finaldmgH+((Hero) charactereHero).getTotalBuff()));
-
+			if(!(charactereHero.getStamina()==0)){
+				restH = (int) (vieMonster - (finaldmgH+((Hero) charactereHero).getTotalBuff()));
+			}else{
+				restH = vieMonster - finaldmgH;
+			}
 			int resH = (restH>0) ? restH: 0;
 			charactereMonstre.setLife(resH);
 			////
@@ -218,8 +222,11 @@ public abstract class Character {
 			if(charactereMonstre.getLife()>0){
 			float viemoins = charactereMonstre.attack() * charactereHero.computeProtection()/100;
 			int finaldmgM = charactereMonstre.total - (int)viemoins;
-			int restM = (int) (vieHero - (finaldmgM + charactereMonstre.getTotalBuff()));
-
+			if(!(charactereMonstre.getStamina() == 0)){
+			 restM = (int) (vieHero - (finaldmgM + charactereMonstre.getTotalBuff()));
+			}else{
+				restM = vieHero - finaldmgM;
+			}
 			int resM = (restM>0) ? restM: 0;
 			charactereHero.setLife(resM);
 			int dmgM = vieBaseHero - restM;

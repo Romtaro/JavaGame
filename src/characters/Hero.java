@@ -5,7 +5,7 @@ import lsg.helpers.Dice;
 import lsg.weapons.Sword;
 import lsg.weapons.Weapon;
 public class Hero extends Character{
-	ArmorItem [] armor;
+	ArmorItem[] armor;
 	Ring[] ring;
 	Hero hero;
 	public static final int MAX_ARMOR_PIECES=3;
@@ -15,7 +15,7 @@ public class Hero extends Character{
 	 */
 	public Hero(int f, Weapon weapon){
 
-		this.life = 100;
+		this.life = 150;
 		this.stamina = 50;
 		this.name = "Ynovator";
 		this.dee = new Dice(f);

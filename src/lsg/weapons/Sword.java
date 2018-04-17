@@ -12,8 +12,8 @@ public class Sword {
 	public Sword() {
 
 		this.name = "Basic Sword";
-		this.minDamage = 5;
-		this.maxDamage = 10;
+		this.minDamage = 10;
+		this.maxDamage = 20;
 		this.stamCost = 20;
 		this.durability = 100;
 	}
