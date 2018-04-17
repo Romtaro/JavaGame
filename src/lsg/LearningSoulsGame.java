@@ -8,7 +8,9 @@ import characters.Lycanthrope;
 import characters.Monster;
 import lsg.weapons.Weapon;
 import lsg.armor.*;
-
+import lsg.buffs.rings.Ring;
+import lsg.buffs.rings.RingOfSwords;
+import lsg.buffs.talismans.Talisman;
 import lsg.weapons.Claw;
 import lsg.weapons.ShotGun;
 import lsg.weapons.Sword;
@@ -105,22 +107,32 @@ public class LearningSoulsGame {
 		Monster meme = new Lycanthrope();
 		//play_v1(hero,monstre);
 		//play_v2(hero,monstre);
-		play_v3(hero, meme);
+		play_v4(hero, meme);
 	}
 
-	private static void play_v1(Character characterHero, Character characterMonster){
+	private static void play_v1(Character characterHero, Monster characterMonster){
 		characterHero.combat(characterHero, characterMonster);
 	}
 
-	private static void play_v2(Character characterHero, Character characterMonster){
+	private static void play_v2(Character characterHero, Monster characterMonster){
 		RingedKnightArmor itemR = new RingedKnightArmor();
 		((Hero) characterHero).setArmorItem(itemR, 0);
 		characterHero.combat(characterHero, characterMonster);
 	}
 
-	private static void play_v3(Character characterHero, Character characterMonster){
+	private static void play_v3(Character characterHero, Monster characterMonster){
 		RingedKnightArmor itemR = new RingedKnightArmor();
 		((Hero) characterHero).setArmorItem(itemR, 0);
+
+		characterHero.combat(characterHero, characterMonster);
+	}
+	private static void play_v4(Character characterHero, Monster characterMonster){
+		RingedKnightArmor itemR = new RingedKnightArmor();
+		Ring ring = new RingOfSwords();
+		Talisman talisman = new Talisman("Talismans de jour", 15, 12, 17);
+		((Hero) characterHero).setArmorItem(itemR, 0);
+		((Hero) characterHero).setRing(ring, 1);
+		characterMonster.setTalismanItems(talisman);
 		characterHero.combat(characterHero, characterMonster);
 	}
 }

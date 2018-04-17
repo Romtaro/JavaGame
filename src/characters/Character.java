@@ -1,9 +1,11 @@
 package characters;
+import lsg.buffs.rings.Ring;
 import lsg.helpers.Dice;
 import lsg.weapons.Sword;
 import lsg.weapons.Weapon;
 import characters.Monster;
 import java.util.Scanner;
+import java.nio.Buffer;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -14,6 +16,7 @@ public abstract class Character {
 	public Weapon weapon;
 	public Sword sword;
 	public Monster monster;
+	public Ring ring;
 	Scanner scanner = new Scanner(System.in);
 
 	/**
@@ -82,7 +85,7 @@ public abstract class Character {
 		public String toString(){
 			String protect = NumberFormat.getNumberInstance(Locale.US).format(computeProtection());
 
-			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(), "PROTECTION: "+ protect,isAlive());
+			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(), "PROTECTION: "+ protect, "Buff :"+ buff(), isAlive());
 		}
 	/**
 	 * On va regarder si un joueur est en vie suivant le boolean on return un string alive ou dead
@@ -184,7 +187,7 @@ public abstract class Character {
 		return (int)dmg;
 	}
 
-	public void combat(Character charactereHero, Character charactereMonstre){
+	public void combat(Character charactereHero, Monster charactereMonstre){
 		///Resum//
 		refreshVs(charactereHero, charactereMonstre);
 
@@ -199,9 +202,11 @@ public abstract class Character {
 			System.out.println(charactereHero.getName()+" Attaque "+charactereMonstre.getName()+"\n");
 			//on calcul vie en moins///
 			float viemoinsh =charactereHero.attack() * charactereMonstre.computeProtection()/100 ;
+
+			//System.out.println(((Hero) charactereHero).getTotalBuff());
 			int finaldmgH = charactereHero.total - (int) viemoinsh;
 			//ok on enleve la vie//
-			int restH = vieMonster - finaldmgH;
+			int restH = (int) (vieMonster - (finaldmgH+((Hero) charactereHero).getTotalBuff()));
 
 			int resH = (restH>0) ? restH: 0;
 			charactereMonstre.setLife(resH);
@@ -213,7 +218,7 @@ public abstract class Character {
 			if(charactereMonstre.getLife()>0){
 			float viemoins = charactereMonstre.attack() * charactereHero.computeProtection()/100;
 			int finaldmgM = charactereMonstre.total - (int)viemoins;
-			int restM = vieHero - finaldmgM;
+			int restM = (int) (vieHero - (finaldmgM + charactereMonstre.getTotalBuff()));
 
 			int resM = (restM>0) ? restM: 0;
 			charactereHero.setLife(resM);
@@ -237,7 +242,7 @@ public abstract class Character {
 
 	}
 
-	public void refresh(Character charactereHero, Character charactereMonstre){
+	public void refresh(Character charactereHero, Monster charactereMonstre){
 		System.out.println("Hit enter --> key for next move :");
 		String st = scanner.nextLine();
 		///Resum//
@@ -245,7 +250,7 @@ public abstract class Character {
 		System.out.println(charactereMonstre.toString()+("\n"));
 		///////
 	}
-	public void refreshVs(Character charactereHero, Character charactereMonstre){
+	public void refreshVs(Character charactereHero, Monster charactereMonstre){
 		System.out.println("Hit enter --> key for next move :");
 		String st = scanner.nextLine();
 		System.out.println("\t \t \t \t COMBAT START");
@@ -254,4 +259,5 @@ public abstract class Character {
 		System.out.println(charactereMonstre.toString()+("\n"));
 	}
 	public abstract float computeProtection();
+	public abstract float buff();
 }

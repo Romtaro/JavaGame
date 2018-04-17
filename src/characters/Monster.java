@@ -1,12 +1,14 @@
 package characters;
 import lsg.weapons.Weapon;
+import lsg.buffs.rings.Ring;
+import lsg.buffs.talismans.Talisman;
 import lsg.helpers.Dice;
 
 
 public class Monster extends Character{
 	private static int instances = 0;
 	protected float skinThickness;
-
+	Talisman talismans;
 	/**
 	 * on utilise la value instances pour nommer les monstre
 	 */
@@ -18,6 +20,7 @@ public class Monster extends Character{
 		this.dee = new Dice(i);
 		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
 		this.skinThickness = 20;
+
 	}
 
 	public Monster(String name, int i, Weapon weapon){
@@ -31,7 +34,16 @@ public class Monster extends Character{
 
 	}
 
-
+	public Monster(String name, int i, Weapon weapon, Talisman talisman){
+		INSTANCES_COUNT();
+		this.name = String.format("%-6s %-1s",name , "n°"+instances);
+		this.life = 10;
+		this.stamina = 10;
+		this.dee = new Dice(i);
+		this.skinThickness = 10;
+		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
+		this.talismans = talisman;
+	}
 	 public float getSkinThickness() {
 		return skinThickness;
 	}
@@ -51,5 +63,24 @@ public class Monster extends Character{
 
 		return getSkinThickness();
 	}
+	public float buff(){
 
+		return getTotalBuff();
+	}
+	public Talisman setTalismanItems(Talisman talisman){
+		Talisman item1 = talisman;
+				this.talismans = item1;
+				System.out.println("Talisman :" + item1.getName());
+		return this.talismans;
+}
+	public float getTotalBuff(){
+		float totalBuff =0;
+		Talisman item1 =this.talismans;
+		if(!(item1 == null)){
+			totalBuff += item1.computeBuffValue();
+		}else {
+			totalBuff += 0;
+		}
+		return totalBuff;
+	}
 }

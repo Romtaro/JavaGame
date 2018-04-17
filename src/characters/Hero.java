@@ -7,6 +7,7 @@ import lsg.weapons.Weapon;
 public class Hero extends Character{
 	ArmorItem [] armor;
 	Ring[] ring;
+	Hero hero;
 	public static final int MAX_ARMOR_PIECES=3;
 	public static final int MAX_RING_PIECES=2;
 	/**
@@ -35,12 +36,30 @@ public class Hero extends Character{
 
 	}
 
+	public Hero(int f, Sword sword, Ring ring){
+
+		this.life = 100;
+		this.stamina = 50;
+		this.name = "Ynovator";
+		this.dee = new Dice(f);
+		this.sword = new Sword();
+		this.armor = new ArmorItem[MAX_ARMOR_PIECES];
+		this.ring = new Ring[MAX_RING_PIECES];
+
+	}
+
 	public Ring[] getRing() {
 		return ring;
 	}
 
 	public void setRing(Ring ring, int slot) {
+		if(!(slot<0) || !(slot>MAX_RING_PIECES)){
+			ring.setHero(this.hero);
 		this.ring[slot] = ring;
+
+		}else{
+			return;
+		}
 	}
 
 	/**
@@ -103,6 +122,38 @@ public class Hero extends Character{
 			}
 		return item1;
 }
+	public Ring[] getRingItems(){
+		Ring[] item1 = null;
+		int j = 1;
+
+		for(int i=0; i<this.ring.length;i++){
+			try{
+			if(!(this.ring ==null)){
+				item1[j] = this.ring[i];
+				System.out.println("Ring n°"+j +" : "+item1);
+				++j;
+			}else{
+
+			}}catch(Exception e){
+					//Slot Item vide !! héhé
+		     }
+			}
+		return item1;
+}
+	public float getTotalBuff(){
+		float totalBuff =0;
+		Ring item1 =this.ring[0];
+		Ring item2 =this.ring[1];
+		if(!(item1 == null)){
+			totalBuff += item1.getPower();
+		}
+		if(!(item2 == null)){
+			totalBuff += item2.getPower();
+		}
+
+		return totalBuff;
+	}
+
 	/*
 	 * (Question 4.2)
 	 * @see characters.Character#computeProtection()
@@ -112,5 +163,10 @@ public class Hero extends Character{
 	public float computeProtection(){
 
 		return getTotalArmor();
+	}
+	@Override
+	public float buff(){
+
+		return getTotalBuff();
 	}
 }

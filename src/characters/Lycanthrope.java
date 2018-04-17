@@ -17,4 +17,5 @@ public class Lycanthrope extends Monster{
 		this.skinThickness = 50;
 
 	}
+
 }

@@ -31,7 +31,6 @@ public class RingOfSwords extends Ring{
 	 * @param args non utilisé
 	 */
 	public static void main(String[] args) {
-		Sword sword = new Sword();
 		Sword weapon = new Sword();
 		Hero hero = new Hero(101, weapon) ;
 		RingOfSwords r = new RingOfSwords() ;
