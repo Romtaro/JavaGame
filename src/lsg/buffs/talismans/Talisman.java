@@ -20,6 +20,7 @@ public class Talisman extends BuffItem {
 		this.start = start ;
 		this.end = end ;
 	}
+
 	/**
 	 * @see #computeBuffValue()
 	 * la fonction à pour but de voir si le le talisment et dans son intervalle de temps pour activation du buff
