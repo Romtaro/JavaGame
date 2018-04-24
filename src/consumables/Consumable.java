@@ -54,7 +54,7 @@ public class Consumable {
 	}
 
 	public static void main(String[] args) {
-		Consumable consumable = new Consumable("Grosse popo", 50, "PDV");
+		Consumable consumable = new Consumable("La Grosse Popo", 500, "PDV");
 		Hamburger hamburger = new Hamburger();
 		Whisky whisky = new Whisky();
 		System.out.println(consumable.toString());
