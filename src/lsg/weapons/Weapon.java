@@ -80,7 +80,17 @@ public class Weapon {
 	}*/
 	@Override
 	public String toString(){
-		return String.format("%-1s %-1s %-1s %-1s %-1s %-1s","["+getClass().getSimpleName()+"]", getName(),"(min:"+getMinDamage() , "max:"+getMaxDamage(), "Stam:"+getStamCost(), "dur:"+getDurability()+" "+"[" +isBroken()+"]"+")");
+		return String.format("%-1s %-1s %-1s %-1s %-1s %-1s","["+getClass().getSimpleName()+"]", getName(),"(min:"+getMinDamage() , "max:"+getMaxDamage(), "Stam: "+getStamCost()+" ", DURABILITY_STAT_STRING() +" "+"[" +isBroken()+"]"+")");
 	}
+	public String DURABILITY_STAT_STRING(){
+		return  String.format("%-20s","Durability : " +this.durability );
+	}
+	public String ARMOR_STAT_STRING(){
+		return  String.format("%-20s","Durability : " +this.hero.MAX_ARMOR_PIECES);
+	}
+	public String BUFF_STAT_STRING(){
+		return  String.format("%-20s","Durability : " +this.hero.getTotalBuff());
+	}
+
 
 }

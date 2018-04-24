@@ -85,7 +85,7 @@ public abstract class Character {
 		public String toString(){
 			String protect = NumberFormat.getNumberInstance(Locale.US).format(computeProtection());
 
-			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(), "PROTECTION: "+ protect, "Buff :"+ buff(), isAlive());
+			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), LIFE_STAT_STRING() ,STAM_STAT_STRING(), "PROTECTION: "+ protect, "Buff :"+ buff(), isAlive());
 		}
 	/**
 	 * On va regarder si un joueur est en vie suivant le boolean on return un string alive ou dead
@@ -267,4 +267,21 @@ public abstract class Character {
 	}
 	public abstract float computeProtection();
 	public abstract float buff();
+
+	public String LIFE_STAT_STRING(){
+		return  String.format("%-20s"," life :"+ this.life);
+	}
+
+	public String STAM_STAT_STRING(){
+		return  String.format("%-20s","Stamina :"+ this.stamina);
+	}
+	public String ARMOR_STAT_STRING(){
+		return  String.format("%-20s","Armor :"+ computeProtection());
+	}
+	public String BUFF_STAT_STRING(){
+		return  String.format("%-20s","BUFF :"+ buff());
+	}
+
+
+
 }

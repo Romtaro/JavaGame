@@ -107,6 +107,7 @@ public class LearningSoulsGame {
 		Monster meme = new Lycanthrope();
 		//play_v1(hero,monstre);
 		//play_v2(hero,monstre);
+
 		play_v4(hero, meme);
 	}
 
@@ -130,9 +131,11 @@ public class LearningSoulsGame {
 		RingedKnightArmor itemR = new RingedKnightArmor();
 		Ring ring = new RingOfSwords();
 		Talisman talisman = new Talisman("Talismans de jour", 15, 12, 17);
+
 		((Hero) characterHero).setArmorItem(itemR, 0);
 		((Hero) characterHero).setRing(ring, 1);
 		characterMonster.setTalismanItems(talisman);
 		characterHero.combat(characterHero, characterMonster);
+
 	}
 }
