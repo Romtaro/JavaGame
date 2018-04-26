@@ -30,8 +30,8 @@ public static void main(String[] args) {
 	MenuBestOfV4 MenuBestOfV4 = new MenuBestOfV4();
 	System.out.println(MenuBestOfV4.getClass().getSimpleName()+" :");
 	/**
-	 * Question TP 4 3.3 : il faut préciser sur quel tableau nous travaillons et comment il doit agir,
-	 * mon itérator passer dans mon while a chaque fois qu'i change d'élement.
+	 * Question TP 4 3.4 : Rien de spécial a modifier.
+	 *
 	 */
 	Iterator i = MenuBestOfV4.menu.iterator();
 	int j = 0;
