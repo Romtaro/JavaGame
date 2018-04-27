@@ -35,7 +35,7 @@ public class RingOfDeath extends Ring{
 	 * @param args non utilisé
 	 */
 	public static void main(String[] args) {
-		Weapon weapon = new Weapon("Le truc", 20, 60, 10, 100);
+		Weapon weapon = new Weapon("Le truc", 20, 60, 10, 100, 100);
 		Hero hero = new Hero(101, weapon);
 		Ring r = new RingOfDeath() ;
 		hero.setRing(r, 0);

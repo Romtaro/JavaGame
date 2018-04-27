@@ -9,6 +9,7 @@ public class Lycanthrope extends Monster{
 		super(i, weapon);
 		this.name = "Lycanthrope";
 		this.skinThickness = 50;
+		setMaxLife(100);
 	}
 
 	public Lycanthrope() {
@@ -16,6 +17,7 @@ public class Lycanthrope extends Monster{
 		this.name = "Lycanthrope";
 		this.skinThickness = 50;
 		this.life = 40;
+		setMaxLife(40);
 	}
 
 }

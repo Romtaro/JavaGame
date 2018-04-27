@@ -4,9 +4,18 @@ import lsg.helpers.Dice;
 import lsg.weapons.Sword;
 import lsg.weapons.Weapon;
 import characters.Monster;
+import consumables.Consumable;
+import consumables.MenuBestOfV4;
+import consumables.drinks.Drink;
+import consumables.drinks.Whisky;
+import consumables.food.Americain;
+import consumables.food.Food;
+import consumables.reapir.RepairKit;
+
 import java.util.Scanner;
 import java.nio.Buffer;
 import java.text.NumberFormat;
+import java.util.Iterator;
 import java.util.Locale;
 
 
@@ -17,6 +26,10 @@ public abstract class Character {
 	public Sword sword;
 	public Monster monster;
 	public Ring ring;
+	public Hero hero;
+
+
+
 	Scanner scanner = new Scanner(System.in);
 
 	/**
@@ -29,6 +42,14 @@ public abstract class Character {
 	protected int stamina;
 	private int maxStamina;
 	public int total;
+	private Consumable consumable;
+
+	public Consumable getConsumable() {
+		return consumable;
+	}
+	public void setConsumable(Consumable consumable) {
+		this.consumable = consumable;
+	}
 
 	public String getName() {
 		return name;
@@ -85,7 +106,7 @@ public abstract class Character {
 		public String toString(){
 			String protect = NumberFormat.getNumberInstance(Locale.US).format(computeProtection());
 
-			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), "Life: "+getLife(),"Stamina: "+ getStamina(), "PROTECTION: "+ protect, "Buff :"+ buff(), isAlive());
+			return String.format("%-20s %-20s  %-20s %-20s %-20s %-20s %-20s", "["+getClass().getSimpleName()+"] ", getName(), LIFE_STAT_STRING() ,STAM_STAT_STRING(), "PROTECTION: "+ protect, "Buff :"+ buff(), isAlive());
 		}
 	/**
 	 * On va regarder si un joueur est en vie suivant le boolean on return un string alive ou dead
@@ -175,7 +196,8 @@ public abstract class Character {
 		return de;
 	}
 	public int attack(){
-		 this.attackWith(this.weapon);
+		 this.attackWith(getWeapon());
+
 		return this.getHitWith(this.total);
 
 	}
@@ -187,19 +209,29 @@ public abstract class Character {
 		return (int)dmg;
 	}
 
-	public void combat(Character charactereHero, Monster charactereMonstre){
+	public void combat(Hero charactereHero, Monster charactereMonstre){
 		///Resum//
 		refreshVs(charactereHero, charactereMonstre);
 
 				///////
 		while(!(charactereHero.getLife()==0) && !(charactereMonstre.getLife() == 0) && !(charactereHero.getStamina() == 0)){
+
 			int restH = 0;
-			int restM =0;
-			int vieHero = charactereHero.getLife();
-			int vieMonster = charactereMonstre.getLife();
-			int vieBaseHero = charactereHero.getLife();
-			int vieBaseMonster = charactereMonstre.getLife();
+			int restM = 0;
+			int dmg = 0;
+			int dmgM = 0;
+			//int vieHero = charactereHero.getLife();
+			//int vieMonster = charactereMonstre.getLife();
+			//int vieBaseHero = charactereHero.getLife();
+			//int vieBaseMonster = charactereMonstre.getLife();
 			/////Tour Hero////
+			int action =refresh(charactereHero, charactereMonstre);
+
+			if(action ==1){
+
+
+			System.out.println(charactereHero.getConsumable().toString());
+			System.out.println(charactereHero.getWeapon().toString());
 			System.out.println(charactereHero.getName()+" Attaque "+charactereMonstre.getName()+"\n");
 			//on calcul vie en moins///
 			float viemoinsh =charactereHero.attack() * charactereMonstre.computeProtection()/100 ;
@@ -208,33 +240,43 @@ public abstract class Character {
 			int finaldmgH = charactereHero.total - (int) viemoinsh;
 			//ok on enleve la vie//
 			if(!(charactereHero.getStamina()==0)){
-				restH = (int) (vieMonster - (finaldmgH+((Hero) charactereHero).getTotalBuff()));
+				restH = (int) (charactereMonstre.getLife() - (finaldmgH+ charactereHero.getTotalBuff()));
+				dmg = (int) (finaldmgH+ charactereHero.getTotalBuff());
 			}else{
-				restH = vieMonster - finaldmgH;
+				restH = charactereMonstre.getLife() - finaldmgH;
+				dmg = (int) (finaldmgH);
 			}
 			int resH = (restH>0) ? restH: 0;
 			charactereMonstre.setLife(resH);
 			////
-			int dmg = vieBaseMonster - restH;
+			dmg = (int) (finaldmgH+ charactereHero.getTotalBuff());
 			System.out.println(charactereMonstre.getName()+" prend "+ dmg +" de dommage \n Il ne reste : "+ resH + " PDV\n" );
+			}else if(action ==2){
+				charactereHero.consume();
+				//vieHero =charactereHero.getLife();
+			}else{
 
+			}
 			////////Tour Monstre//////////
 			if(charactereMonstre.getLife()>0){
+
 			float viemoins = charactereMonstre.attack() * charactereHero.computeProtection()/100;
 			int finaldmgM = charactereMonstre.total - (int)viemoins;
 			if(!(charactereMonstre.getStamina() == 0)){
-			 restM = (int) (vieHero - (finaldmgM + charactereMonstre.getTotalBuff()));
+			 restM = (int) (charactereHero.getLife() - (finaldmgM + charactereMonstre.getTotalBuff()));
+			 dmgM = (int) (finaldmgM + charactereMonstre.getTotalBuff());
 			}else{
-				restM = vieHero - finaldmgM;
+				restM = charactereHero.getLife() - finaldmgM;
+				dmgM = (int) (finaldmgM);
 			}
 			int resM = (restM>0) ? restM: 0;
 			charactereHero.setLife(resM);
-			int dmgM = vieBaseHero - restM;
+
 			System.out.println(charactereHero.getName()+" prend "+ dmgM +" de dommage \n Il ne reste : "+ resM + " PDV\n" );
-			refresh(charactereHero, charactereMonstre);
+
 			}
 			else{
-				refresh(charactereHero, charactereMonstre);
+
 				System.out.println(charactereMonstre.getName()+" est mort de ses blessures");
 
 			}
@@ -249,22 +291,120 @@ public abstract class Character {
 
 	}
 
-	public void refresh(Character charactereHero, Monster charactereMonstre){
-		System.out.println("Hit enter --> key for next move :");
-		String st = scanner.nextLine();
+	public int refresh(Hero charactereHero, Monster charactereMonstre){
+
+		System.out.println("Hero’s action for next move --> (1) attack | (2) consume :");
+
+		int st = scanner.nextInt();
 		///Resum//
+		if(st==1 || st ==2){
 		System.out.println(charactereHero.toString());
 		System.out.println(charactereMonstre.toString()+("\n"));
+		}
+		else{
+			refresh(charactereHero,charactereMonstre);
+		}
 		///////
+		return st;
 	}
 	public void refreshVs(Character charactereHero, Monster charactereMonstre){
-		System.out.println("Hit enter --> key for next move :");
+		System.out.println("Hit enter --> key for start:");
 		String st = scanner.nextLine();
 		System.out.println("\t \t \t \t COMBAT START");
+		System.out.println(charactereHero.getConsumable().toString());
+		System.out.println(charactereHero.getWeapon().toString());
 		System.out.println(charactereHero.toString());
 		System.out.println("\t \t \t VS");
 		System.out.println(charactereMonstre.toString()+("\n"));
 	}
 	public abstract float computeProtection();
 	public abstract float buff();
+
+	public String LIFE_STAT_STRING(){
+		return  String.format("%-20s"," life :"+ this.life);
+	}
+
+	public String STAM_STAT_STRING(){
+		return  String.format("%-20s","Stamina :"+ this.stamina);
+	}
+	public String ARMOR_STAT_STRING(){
+		return  String.format("%-20s","Armor :"+ computeProtection());
+	}
+	public String BUFF_STAT_STRING(){
+		return  String.format("%-20s","BUFF :"+ buff());
+	}
+
+	public void use(Consumable consumable){
+
+		String Class = consumable.getClass().getSimpleName().toString();
+		if(Class.equals("Drink")){
+			drink((Drink)consumable);
+
+		}else if(Class.equals("Food")){
+			eat((Food) consumable);
+		}else if(Class.equals("RepairKit")){
+			repairWeaponWith((RepairKit)consumable);
+		}else{
+			System.out.println("A sec ! :p ");
+		}
+	}
+
+	private void drink(Drink drink){
+		System.out.println("Avant consommation "+getName()+" " +drink.toString() );
+		if(!(this.stamina == this.maxStamina)){
+		int boisson = drink.use();
+		setStamina(getStamina()+boisson);
+		}else{
+			System.out.println("Stamina au max !! ");
+		}
+		if(this.stamina>this.maxStamina){
+			setStamina(this.maxStamina);
+
+		}
+		System.out.println("Apres consommation "+getName()+" " +drink.toString() );
+	}
+
+	private void eat(Food food){
+		System.out.println("Avant consommation "+getName()+" " +food.toString() );
+		if(!(this.life == this.maxLife)){
+		int miam = food.use();
+		setLife(getLife()+miam);
+		}else{
+			System.out.println("PDV déja au max ! ");
+		}
+		if(this.life>this.maxLife){
+
+			setLife(this.maxLife);
+		}
+		System.out.println("Apres consommation "+getName()+" " +food.toString() );
+	}
+
+	private void repairWeaponWith(RepairKit kit){
+		if(kit.getCapacity() > 0){
+			if(getWeapon().getDurability() < getWeapon().getMaxDurability()){
+				System.out.println(getName()+" "+ getWeapon().toString()+" with " + kit.toString() );
+			getWeapon().setDurability(getWeapon().getDurability() + kit.use());
+				System.out.println(getName()+" "+ getWeapon().toString()+" with " + kit.toString() );
+			}else{
+				System.out.println("Durability au max ! ");
+			}
+		}
+			else{
+				System.out.println("a pu de kit :'( ");
+			}
+	}
+	public void consume(){
+		use(getConsumable());
+	}
+	public static void main(String[] args) {
+		Whisky whisky = new Whisky();
+		Americain americain = new Americain();
+		RepairKit kit = new RepairKit("df", 10, "sd");
+		Sword sword = new Sword();
+		Hero heros = new Hero(100, sword);
+		heros.use(whisky.whisky);
+		heros.use(americain.americain);
+		heros.use(kit);
+
+	}
 }

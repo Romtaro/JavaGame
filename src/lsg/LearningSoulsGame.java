@@ -1,11 +1,17 @@
 package lsg;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import characters.Character;
 import characters.Hero;
 import characters.Lycanthrope;
 import characters.Monster;
+import consumables.Consumable;
+import consumables.MenuBestOfV4;
+import consumables.food.Hamburger;
+import consumables.reapir.RepairKit;
 import lsg.weapons.Weapon;
 import lsg.armor.*;
 import lsg.buffs.rings.Ring;
@@ -26,10 +32,10 @@ public class LearningSoulsGame {
 		BlackWitchVeil itemB = new BlackWitchVeil();
 		RingedKnightArmor itemR = new RingedKnightArmor();
 		DragonSlayerLeggings itemD = new DragonSlayerLeggings();
-		System.out.println(itemB.toString());
+		/*System.out.println(itemB.toString());
 		System.out.println(itemR.toString());
 		System.out.println(itemD.toString());
-
+*/
 		init();
 		/*
 		 * On initialise deux hero et quatre monstre avec les deux méthode de constructeur
@@ -97,9 +103,9 @@ public class LearningSoulsGame {
 
 	}
 
-	private static void init(){
+	/*private static void init(){
 		System.out.println("-------------------------------- Bienvenue dans SoualsGame Aventurier ! --------------------------------\n");
-		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100);
+		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100,100);
 		hero = new Hero(101,shotGun);
 		Claw claw = new Claw();
 		monstre = new Monster("BiggyBoss",101,claw);
@@ -107,32 +113,83 @@ public class LearningSoulsGame {
 		Monster meme = new Lycanthrope();
 		//play_v1(hero,monstre);
 		//play_v2(hero,monstre);
-		play_v4(hero, meme);
-	}
 
-	private static void play_v1(Character characterHero, Monster characterMonster){
+		//play_v4(hero, meme);
+		createExhaustedHero();
+
+	}*/
+	private static void init(){
+		title();
+		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100,100);
+		hero = new Hero(101,shotGun);
+		Claw claw = new Claw();
+		monstre = new Monster("BiggyBoss",101,claw);
+		Hamburger hamburger = new Hamburger();
+		hero.setConsumable(hamburger.hamburger);
+		play_v4(hero, monstre);
+
+
+	}
+	final public String BULLET_POINT(){
+		return String.format("%-20s", "\u2219");
+
+	}
+	private static void play_v1(Hero characterHero, Monster characterMonster){
 		characterHero.combat(characterHero, characterMonster);
 	}
 
-	private static void play_v2(Character characterHero, Monster characterMonster){
+	private static void play_v2(Hero characterHero, Monster characterMonster){
 		RingedKnightArmor itemR = new RingedKnightArmor();
 		((Hero) characterHero).setArmorItem(itemR, 0);
 		characterHero.combat(characterHero, characterMonster);
 	}
 
-	private static void play_v3(Character characterHero, Monster characterMonster){
+	private static void play_v3(Hero characterHero, Monster characterMonster){
 		RingedKnightArmor itemR = new RingedKnightArmor();
 		((Hero) characterHero).setArmorItem(itemR, 0);
 
 		characterHero.combat(characterHero, characterMonster);
 	}
-	private static void play_v4(Character characterHero, Monster characterMonster){
+	private static void play_v4(Hero characterHero, Monster characterMonster){
 		RingedKnightArmor itemR = new RingedKnightArmor();
 		Ring ring = new RingOfSwords();
 		Talisman talisman = new Talisman("Talismans de jour", 15, 12, 17);
+
 		((Hero) characterHero).setArmorItem(itemR, 0);
 		((Hero) characterHero).setRing(ring, 1);
 		characterMonster.setTalismanItems(talisman);
 		characterHero.combat(characterHero, characterMonster);
+	}
+	static void createExhaustedHero(){
+		Weapon weapon = new Weapon("Grosse Arme", 0, 0, 1000, 100,100);
+		Hero Heron = new Hero(100, weapon, 1);
+		System.out.println(Heron.toString());
+		System.out.println(weapon.toString());
+		//RepairKit kit = new RepairKit("df", 10, "sd");
+		//Heron.getHitWith(99); ma méthode de touche pas au pdv !
+		Heron.attack();
+		System.out.println(Heron.toString());
+		System.out.println(Heron.getWeapon());
+		Object table = aTable();
+		Iterator<Consumable> i = ((HashSet<Consumable>) table).iterator();
+		while(i.hasNext()){
+			Heron.use(i.next());
+			System.out.println(Heron.toString()+"\n");
+
+
+		}
+
+
+
+	}
+	public static Object aTable(){
+		MenuBestOfV4 menuBestOfV4 = new MenuBestOfV4();
+		System.out.println(menuBestOfV4);
+		return menuBestOfV4.menu;
+
+	}
+	public static void title(){
+		System.out.println("################################\n#   THE LEARNING SOULS GAME    #\n################################");
+
 	}
 }

@@ -1,6 +1,7 @@
 package lsg.weapons;
 
 import characters.Hero;
+import consumables.reapir.RepairKit;
 
 public class Weapon {
 	Hero hero;
@@ -9,14 +10,15 @@ public class Weapon {
 	private int maxDamage;
 	private int stamCost;
 	private int durability;
-
-	public Weapon(String name, int minDamage, int maxDamage, int stamCost, int durability){
+	private int maxDurability;
+	public Weapon(String name, int minDamage, int maxDamage, int stamCost, int durability, int maxDurability){
 
 		this.name = name;
 		this.minDamage = minDamage;
 		this.maxDamage = maxDamage;
 		this.stamCost = stamCost;
 		this.durability = durability;
+		this.maxDurability = maxDurability;
 	}
 
 	public String getName() {
@@ -68,6 +70,12 @@ public class Weapon {
 		dura = Integer.compare(getDurability(), 0);
 		return dura;
 	}
+	public int getMaxDurability() {
+		return maxDurability;
+	}
+	public void setMaxDurability(int durability) {
+		this.maxDurability = maxDurability;
+	}
 	/*
 	 * Test Weapon affichage
 	 */
@@ -80,7 +88,26 @@ public class Weapon {
 	}*/
 	@Override
 	public String toString(){
-		return String.format("%-1s %-1s %-1s %-1s %-1s %-1s","["+getClass().getSimpleName()+"]", getName(),"(min:"+getMinDamage() , "max:"+getMaxDamage(), "Stam:"+getStamCost(), "dur:"+getDurability()+" "+"[" +isBroken()+"]"+")");
+		return String.format("%-1s %-1s %-1s %-1s %-1s %-1s","["+getClass().getSimpleName()+"]", getName(),"(min:"+getMinDamage() , "max:"+getMaxDamage(), "Stam: "+getStamCost()+" ", DURABILITY_STAT_STRING() +" "+"[" +isBroken()+"]"+")");
 	}
+	public String DURABILITY_STAT_STRING(){
+		return  String.format("%-20s","Durability : " +this.durability+"/"+this.maxDurability );
+	}
+	public String ARMOR_STAT_STRING(){
+		return  String.format("%-20s","Durability : " +this.hero.MAX_ARMOR_PIECES);
+	}
+	public String BUFF_STAT_STRING(){
+		return  String.format("%-20s","Durability : " +this.hero.getTotalBuff());
+	}
+	public void repairWith(RepairKit kit){
+		if(kit.getCapacity() > 0){
+		setDurability(getDurability()+kit.use());
+		}
+		else{
+			System.out.println("a pu de kit :(");
+		}
+	}
+
+
 
 }

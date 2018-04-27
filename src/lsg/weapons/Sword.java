@@ -1,72 +1,15 @@
 package lsg.weapons;
 
 
-public class Sword {
+public class Sword extends Weapon{
 
-	private String name;
-	private int minDamage;
-	private int maxDamage;
-	private int stamCost;
-	private int durability;
 
 	public Sword() {
+		super("Basic Sword", 10, 20, 20, 100, 100);
 
-		this.name = "Basic Sword";
-		this.minDamage = 10;
-		this.maxDamage = 20;
-		this.stamCost = 20;
-		this.durability = 100;
 	}
 
-	public String getName() {
-		return name;
-	}
 
-	protected void setName(String name) {
-		this.name = name;
-	}
-
-	public int getMinDamage() {
-		return minDamage;
-	}
-
-	protected void setMinDamage(int minDamage) {
-		this.minDamage = minDamage;
-	}
-
-	public int getMaxDamage() {
-		return maxDamage;
-	}
-
-	protected void setMaxDamage(int maxDamage) {
-		this.maxDamage = maxDamage;
-	}
-
-	public int getStamCost() {
-		return stamCost;
-	}
-
-	protected void setStamCost(int stamCost) {
-		this.stamCost = stamCost;
-	}
-
-	public int getDurability() {
-		return durability;
-	}
-
-	public void setDurability(int durability) {
-		this.durability = durability;
-	}
-
-	protected void use(){
-		this.durability = getDurability()-1;
-	}
-
-	public int isBroken(){
-		int dura;
-		dura = Integer.compare(getDurability(), 0);
-		return dura;
-	}
 	/*
 	 * Test Sword affichage
 	 */
