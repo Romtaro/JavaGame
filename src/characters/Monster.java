@@ -15,34 +15,39 @@ public class Monster extends Character{
 	public Monster(int i, Weapon weapon){
 		INSTANCES_COUNT();
 		this.name = String.format("%-6s %-1s", "YMonster","n°"+instances);
-		this.life = 10;
+		this.life = 100;
+		setMaxLife(100);
 		this.stamina = 10;
 		this.dee = new Dice(i);
-		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
+		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability(),  weapon.getMaxDurability());
 		this.skinThickness = 20;
-
+		setWeapon(this.weapon);
 	}
 
 	public Monster(String name, int i, Weapon weapon){
 		INSTANCES_COUNT();
 		this.name = String.format("%-6s %-1s",name , "n°"+instances);
-		this.life = 10;
+		this.life = 100;
+		setMaxLife(100);
 		this.stamina = 10;
 		this.dee = new Dice(i);
 		this.skinThickness = 10;
-		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
-
+		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability(),  weapon.getMaxDurability());
+		setWeapon(this.weapon);
 	}
 
 	public Monster(String name, int i, Weapon weapon, Talisman talisman){
 		INSTANCES_COUNT();
 		this.name = String.format("%-6s %-1s",name , "n°"+instances);
 		this.life = 100;
+		setMaxLife(100);
 		this.stamina = 10;
 		this.dee = new Dice(i);
 		this.skinThickness = 10;
-		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
+		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability(), weapon.getMaxDurability());
 		this.talismans = talisman;
+
+		setWeapon(this.weapon);
 	}
 	 public float getSkinThickness() {
 		return skinThickness;
@@ -70,7 +75,7 @@ public class Monster extends Character{
 	public Talisman setTalismanItems(Talisman talisman){
 		Talisman item1 = talisman;
 				this.talismans = item1;
-				System.out.println("Talisman :" + item1.getName());
+				//System.out.println("Talisman :" + item1.getName());
 		return this.talismans;
 }
 	public float getTotalBuff(){

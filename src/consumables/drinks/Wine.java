@@ -3,10 +3,10 @@ package consumables.drinks;
 import consumables.Consumable;
 
 public class Wine {
-	public Consumable wine;
+	public Drink wine;
 
 	public Wine(){
-		this.wine = new Consumable("Pomerol",30,"stamina point(s)");
+		this.wine = new Drink("Pomerol",30,"stamina point(s)");
 	}
 
 }

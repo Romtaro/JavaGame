@@ -9,6 +9,7 @@ import consumables.drinks.Whisky;
 import consumables.drinks.Wine;
 import consumables.food.Americain;
 import consumables.food.Hamburger;
+import consumables.reapir.RepairKit;
 
 public class MenuBestOfV4 extends LinkedHashSet {
 	public LinkedHashSet<Consumable> menu;
@@ -16,6 +17,7 @@ public class MenuBestOfV4 extends LinkedHashSet {
 	Hamburger hamburger = new Hamburger();
 	Wine wine = new Wine();
 	Americain americain = new Americain();
+	RepairKit repairKit = new RepairKit(null, 0, null);
 	Coffe coffe = new Coffe();
 	Whisky whisky = new Whisky();
 	this.menu = new LinkedHashSet<>(5);
@@ -24,16 +26,18 @@ public class MenuBestOfV4 extends LinkedHashSet {
 	this.menu.add(americain.americain);
 	this.menu.add(coffe.coffe);
 	this.menu.add( whisky.whisky);
+	this.menu.add( repairKit);
 
 }
 public static void main(String[] args) {
 	MenuBestOfV4 MenuBestOfV4 = new MenuBestOfV4();
+
 	System.out.println(MenuBestOfV4.getClass().getSimpleName()+" :");
 	/**
-	 * Question TP 4 3.4 : Rien de spécial a modifier.
+	 * Question TP 4 3.4 : Rien de spécial a modifier. Je viens de voir que ajouter l'arguement Consumable a iterator éviter de devoir cast par la suite
 	 *
 	 */
-	Iterator i = MenuBestOfV4.menu.iterator();
+	Iterator<Consumable> i = MenuBestOfV4.menu.iterator();
 	int j = 0;
 	while(i.hasNext()){
 		++j;

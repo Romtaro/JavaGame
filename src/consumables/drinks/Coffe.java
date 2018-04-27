@@ -3,9 +3,9 @@ package consumables.drinks;
 import consumables.Consumable;
 
 public class Coffe {
-	public Consumable coffe;
+	public Drink coffe;
 
 	public Coffe(){
-		this.coffe = new Consumable("Hot Grandmother Coffee",10,"stamina point(s)");
+		this.coffe = new Drink("Hot Grandmother Coffee",10,"stamina point(s)");
 	}
 }

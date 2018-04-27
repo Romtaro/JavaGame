@@ -15,22 +15,43 @@ public class Hero extends Character{
 	 */
 	public Hero(int f, Weapon weapon){
 
-		this.life = 150;
+		this.life = 200;
 		this.stamina = 50;
+		setMaxStamina(50);
+		setMaxLife(200);
 		this.name = "Ynovator";
 		this.dee = new Dice(f);
-		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
+		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability(), weapon.getMaxDurability());
+		setWeapon(weapon);
 		this.armor = new ArmorItem[MAX_ARMOR_PIECES];
 		this.ring = new Ring[MAX_RING_PIECES];
+		
+
+	}
+	public Hero(int f, Weapon weapon, int life){
+
+		this.life = life;
+		this.stamina = 50;
+		setMaxStamina(50);
+		setMaxLife(100);
+		this.name = "Ynovator";
+		this.dee = new Dice(f);
+		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability(),  weapon.getMaxDurability());
+		this.armor = new ArmorItem[MAX_ARMOR_PIECES];
+		this.ring = new Ring[MAX_RING_PIECES];
+		setWeapon(weapon);
 
 	}
 	public Hero(int f, Sword sword){
 
 		this.life = 100;
 		this.stamina = 50;
+		setMaxStamina(50);
+		setMaxLife(100);
 		this.name = "Ynovator";
 		this.dee = new Dice(f);
 		this.sword = new Sword();
+		setWeapon(sword);
 		this.armor = new ArmorItem[MAX_ARMOR_PIECES];
 		this.ring = new Ring[MAX_RING_PIECES];
 
@@ -40,9 +61,12 @@ public class Hero extends Character{
 
 		this.life = 100;
 		this.stamina = 50;
+		setMaxStamina(50);
+		setMaxLife(100);
 		this.name = "Ynovator";
 		this.dee = new Dice(f);
 		this.sword = new Sword();
+		setWeapon(sword);
 		this.armor = new ArmorItem[MAX_ARMOR_PIECES];
 		this.ring = new Ring[MAX_RING_PIECES];
 
@@ -68,11 +92,14 @@ public class Hero extends Character{
 	 */
 	public Hero(String name, int i, Weapon weapon){
 		this.name = name;
+		setMaxStamina(50);
+		setMaxLife(100);
 		this.life = 100;
 		this.stamina = 50;
 		this.dee = new Dice(i);
-		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability());
+		this.weapon = new Weapon(weapon.getName(), weapon.getMinDamage(), weapon.getMaxDamage(),weapon.getStamCost(), weapon.getDurability(), weapon.getMaxDurability());
 		this.armor = new ArmorItem[MAX_ARMOR_PIECES];
+		setWeapon(weapon);
 	}
 
 	public void setArmorItem(ArmorItem armorItem, int slot){
