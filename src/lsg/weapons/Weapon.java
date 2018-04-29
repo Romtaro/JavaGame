@@ -2,8 +2,8 @@ package lsg.weapons;
 
 import characters.Hero;
 import consumables.reapir.RepairKit;
-
-public class Weapon {
+import lsg.bags.*;
+public class Weapon implements Collectible {
 	Hero hero;
 	private String name;
 	private int minDamage;
@@ -106,6 +106,12 @@ public class Weapon {
 		else{
 			System.out.println("a pu de kit :(");
 		}
+	}
+
+	@Override
+	public int getWeight() {
+		// TODO Auto-generated method stub
+		return 2;
 	}
 
 

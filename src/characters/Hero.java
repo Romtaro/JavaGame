@@ -25,7 +25,7 @@ public class Hero extends Character{
 		setWeapon(weapon);
 		this.armor = new ArmorItem[MAX_ARMOR_PIECES];
 		this.ring = new Ring[MAX_RING_PIECES];
-		
+
 
 	}
 	public Hero(int f, Weapon weapon, int life){
@@ -181,6 +181,23 @@ public class Hero extends Character{
 		return totalBuff;
 	}
 
+	public ArmorItem[] equip(ArmorItem item, int slot){
+		if(getBagItems().equals(item)){
+		System.out.println(getName() + " equipe "+ item.toString());
+		setArmorItem(item, slot);
+		return getArmorItems();
+		}
+		return null;
+	}
+	public Ring[] equip(Ring ring, int slot){
+		
+		if(getBagItems().equals(ring)){
+			System.out.println(getName() + " equipe "+ ring.toString());
+			setRing(ring, slot);
+			return getRingItems();
+			}
+			return null;
+	}
 	/*
 	 * (Question 4.2)
 	 * @see characters.Character#computeProtection()

@@ -1,4 +1,7 @@
 package characters;
+import lsg.bags.Bag;
+import lsg.bags.Collectible;
+import lsg.bags.SmallBag;
 import lsg.buffs.rings.Ring;
 import lsg.helpers.Dice;
 import lsg.weapons.Sword;
@@ -24,9 +27,8 @@ public abstract class Character {
 	public Dice dee;
 	public Weapon weapon;
 	public Sword sword;
-	public Monster monster;
-	public Ring ring;
-	public Hero hero;
+
+
 
 
 
@@ -43,6 +45,8 @@ public abstract class Character {
 	private int maxStamina;
 	public int total;
 	private Consumable consumable;
+	private Bag bag = new SmallBag(10);
+
 
 	public Consumable getConsumable() {
 		return consumable;
@@ -50,7 +54,61 @@ public abstract class Character {
 	public void setConsumable(Consumable consumable) {
 		this.consumable = consumable;
 	}
+	public void pickUp(Collectible item){
+		System.out.println(getName() +" picks " + item.toString());
+		this.bag.push(item);
+	}
+	public Collectible pullOut(Collectible item){
+		if(this.bag.contains(item)){
+			this.bag.pop(item);
+			System.out.println(getName() +" pull " + item.toString());
+			return item;
+		}
+		else{
+			return null;
+		}
+	}
+	public int getBagCapacity(){
+		return this.bag.getCapacity();
+	}
+	public int getBagWeight(){
+		return this.bag.getWeight();
+	}
+	public Collectible[] getBagItems(){
+		return bag.getItems();
+	}
+	public Bag setBag(Bag bag){
+		System.out.println(getName()+ " changes "+ this.bag.getClass().getSimpleName() +  " for "+ bag.getClass().getSimpleName());
+		this.bag.transfer(this.bag, bag);
+		return this.bag = bag;
+	}
+	public Weapon equip(Weapon weapon){
+		if(this.bag.contains(weapon)){
+			System.out.println(getName() + " equipe "+ weapon.toString());
+			this.bag.push(getWeapon());
+			setWeapon(weapon);
+			this.bag.pop(weapon);
+			return weapon;
+		}else{
+			return null;
+		}
+	}
 
+	public Consumable equip(Consumable consumable){
+		if(this.bag.contains(consumable)){
+			System.out.println(getName() + " equipe "+ consumable.toString());
+			setConsumable(consumable);
+			this.bag.pop(consumable);
+			return consumable;
+
+		}else{
+			return null;
+		}
+	}
+
+	public String printBag(){
+		return this.bag.toString();
+	}
 	public String getName() {
 		return name;
 	}
@@ -396,6 +454,41 @@ public abstract class Character {
 	public void consume(){
 		use(getConsumable());
 	}
+	private Consumable fastUseFirst(Object type){
+
+		Consumable consumable = null;
+		for(int i =0; i< getBagItems().length; i++ ){
+
+		if(this.bag.getItems()[i].getClass().getTypeName() == type){
+
+			System.out.println("ok");
+			System.out.println(getName() + " eat " + this.bag.getItems()[i].toString());
+		//	System.out.println(this.bag.getItems()[i].toString());
+			use((Consumable) this.bag.getItems()[i]);
+			consumable = (Consumable) this.bag.getItems()[i];
+			pullOut(this.bag.getItems()[i]);
+			//return this.bag.getItems()[i];
+
+			return consumable;
+		}else{
+			System.out.println("nn");
+
+		}
+
+		}
+		return consumable;
+	}
+	public Drink fastDrink(){
+		return (Drink) fastUseFirst("consumables.drink.Drink");
+
+	}
+	public Food fastEat(){
+		return (Food) fastUseFirst("consumables.food.Food");
+	}
+	public RepairKit fastRepair(){
+
+		return (RepairKit) fastUseFirst("consumables.reapir.RepairKit");
+	}
 	public static void main(String[] args) {
 		Whisky whisky = new Whisky();
 		Americain americain = new Americain();
@@ -405,6 +498,13 @@ public abstract class Character {
 		heros.use(whisky.whisky);
 		heros.use(americain.americain);
 		heros.use(kit);
+		heros.pickUp(americain.americain);
+		heros.pickUp(americain.americain);
+		heros.pickUp(americain.americain);
+
+		System.out.println(americain.americain.getClass().getTypeName());
+
+
 
 	}
 }

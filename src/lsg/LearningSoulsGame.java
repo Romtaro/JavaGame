@@ -14,6 +14,7 @@ import consumables.food.Hamburger;
 import consumables.reapir.RepairKit;
 import lsg.weapons.Weapon;
 import lsg.armor.*;
+import lsg.bags.MediumBag;
 import lsg.buffs.rings.Ring;
 import lsg.buffs.rings.RingOfSwords;
 import lsg.buffs.talismans.Talisman;
@@ -36,7 +37,8 @@ public class LearningSoulsGame {
 		System.out.println(itemR.toString());
 		System.out.println(itemD.toString());
 */
-		init();
+		//init();
+		testBag();
 		/*
 		 * On initialise deux hero et quatre monstre avec les deux méthode de constructeur
 		 */
@@ -128,8 +130,48 @@ public class LearningSoulsGame {
 		hero.setConsumable(hamburger.hamburger);
 		play_v4(hero, monstre);
 
+	}
+	private static void testBag(){
+		title();
+		ShotGun shotGun = new ShotGun("ShotGun", 6, 20, 5, 100,100);
+		hero = new Hero(101,shotGun);
+		Hamburger hamburger = new Hamburger();
+		Hamburger hamburgecr = new Hamburger();
+		hero.pickUp(hamburger.hamburger);
+		Weapon weapon = new Weapon("Grosse Arme", 0, 1, 1000, 100,100);
+		hero.pickUp(weapon);
+		System.out.println(hero.getBagCapacity());
+
+		System.out.println(hero.getBagWeight());
+		MediumBag mediuemBag = new MediumBag(40);
+		System.out.println(hero.printBag());
+		hero.setBag(mediuemBag);
+		System.out.println(hero.printBag());
+		hero.pullOut(hamburger.hamburger);
+		System.out.println(hero.getWeapon());
+		hero.equip(weapon);
+		System.out.println(hero.printBag());
+		System.out.println(hero.getWeapon());
+
+		hero.equip(hamburger.hamburger);
+		hero.pickUp(hamburger.hamburger);
+		System.out.println(hero.printBag());
+		hero.equip(hamburger.hamburger);
+		RingedKnightArmor itemR = new RingedKnightArmor();
+		System.out.println(hero.printBag());
+		hero.pickUp(itemR);
+		System.out.println(hero.getConsumable());
+		System.out.println(hero.printBag());
+		System.out.println(hero.getArmorItems());
+		hero.equip(itemR, 1);
+		System.out.println(hero.printBag());
+		hero.pickUp(hamburger.hamburger);
+		hero.pickUp(hamburgecr.hamburger);
+		hero.fastEat();
+
 
 	}
+
 	final public String BULLET_POINT(){
 		return String.format("%-20s", "\u2219");
 
@@ -140,13 +182,13 @@ public class LearningSoulsGame {
 
 	private static void play_v2(Hero characterHero, Monster characterMonster){
 		RingedKnightArmor itemR = new RingedKnightArmor();
-		((Hero) characterHero).setArmorItem(itemR, 0);
+		 characterHero.setArmorItem(itemR, 0);
 		characterHero.combat(characterHero, characterMonster);
 	}
 
 	private static void play_v3(Hero characterHero, Monster characterMonster){
 		RingedKnightArmor itemR = new RingedKnightArmor();
-		((Hero) characterHero).setArmorItem(itemR, 0);
+		 characterHero.setArmorItem(itemR, 0);
 
 		characterHero.combat(characterHero, characterMonster);
 	}
@@ -155,8 +197,8 @@ public class LearningSoulsGame {
 		Ring ring = new RingOfSwords();
 		Talisman talisman = new Talisman("Talismans de jour", 15, 12, 17);
 
-		((Hero) characterHero).setArmorItem(itemR, 0);
-		((Hero) characterHero).setRing(ring, 1);
+		 characterHero.setArmorItem(itemR, 0);
+		 characterHero.setRing(ring, 1);
 		characterMonster.setTalismanItems(talisman);
 		characterHero.combat(characterHero, characterMonster);
 	}

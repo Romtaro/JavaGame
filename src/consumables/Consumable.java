@@ -5,8 +5,9 @@ import java.util.Locale;
 
 import consumables.drinks.Whisky;
 import consumables.food.Hamburger;
+import lsg.bags.Collectible;
 
-public class Consumable {
+public class Consumable implements Collectible{
 	private String name;
 	private int capacity;
 	private String stat;
@@ -62,6 +63,12 @@ public class Consumable {
 		System.out.println(whisky.whisky.toString());
 
 }
+
+	@Override
+	public int getWeight() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
 }
 
 

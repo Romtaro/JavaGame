@@ -6,4 +6,5 @@ public class RingedKnightArmor extends ArmorItem {
 		super("Ringed Knight Armor", (float)14.99);
 		// TODO Auto-generated constructor stub
 	}
+
 }
